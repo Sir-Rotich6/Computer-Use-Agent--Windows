@@ -1,0 +1,14 @@
+[tool.pyright]
+venvPath = "computer-use-agent"  # The directory where your virtual environment is located
+venv = ".venv"  # The actual virtual environment folder name
+useLibraryCodeForTypes = true  # Enables better type inference
+reportMissingImports = true  # Warns about missing imports
+reportMissingTypeStubs = false  # Suppresses errors for missing type hints
+
+[tool.black]
+line-length = 88  # Code formatting standard
+target-version = ['py38', 'py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"  # Sort imports to match Black's style
+line_length = 88
