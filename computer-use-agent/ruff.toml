@@ -1,0 +1,33 @@
+# Exclude the virtual environment folder from Ruff checks
+extend-exclude = [".venv"]
+
+# Formatting settings
+[format]
+# Ensure code inside docstrings is also formatted properly
+docstring-code-format = true
+
+[lint]
+# Enable specific linting rules
+select = [
+    "A",       # Best practices
+    "ASYNC",   # Async/await usage
+    "B",       # Bugbear (security and performance issues)
+    "E",       # Pycodestyle errors
+    "F",       # Flake8 errors (e.g., undefined variables)
+    "I",       # Import sorting
+    "PIE",     # Miscellaneous Python checks
+    "RUF200",  # Ruff-specific rules
+    "T20",     # Detects TODO comments
+    "UP",      # Upgrades old Python syntax
+    "W",       # Pycodestyle warnings
+]
+
+# Ignore specific linting rules
+ignore = [
+    "E501",      # Ignore line length errors
+    "ASYNC230"   # Ignore specific async-related rule
+]
+
+[lint.isort]
+# Combine 'as' imports into a single line
+combine-as-imports = true
