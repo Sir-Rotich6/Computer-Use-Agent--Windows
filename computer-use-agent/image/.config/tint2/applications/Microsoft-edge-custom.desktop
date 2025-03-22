@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Microsoft Edge Custom
+Comment=Open Microsoft Edge with custom URL
+Exec=microsoft-edge --new-window
+Icon=microsoft-edge
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;
