@@ -1,0 +1,8 @@
+[Windows Shortcut]
+Name=Terminal
+Comment=Open Terminal
+Exec=powershell.exe
+Icon=%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe
+Terminal=true
+Type=Application
+Categories=System;TerminalEmulator;
