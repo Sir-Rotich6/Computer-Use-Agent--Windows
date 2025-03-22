@@ -1,0 +1,60 @@
+# ================================
+# Windows Taskbar Customization Script
+# Equivalent to Tint2 Panel for Linux
+# ================================
+
+# -------------------------------
+# Taskbar Registry Settings
+# -------------------------------
+$regContent = @"
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3]
+"Settings"=hex:30,00,00,00,fe,ff,ff,ff,02,00,00,00,00,00,00,00,3c,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"TaskbarSmallIcons"=dword:00000001
+"EnableAutoTray"=dword:00000000
+"TaskbarGlomLevel"=dword:00000002
+"TaskbarAnimations"=dword:00000000
+"TaskbarAcrylicOpacity"=dword:00000064
+"@
+
+# Save registry settings to a file and apply them
+$regFilePath = "$env:TEMP\custom_taskbar.reg"
+$regContent | Set-Content -Path $regFilePath -Encoding ASCII
+Start-Process regedit.exe -ArgumentList "/s $regFilePath" -Wait
+Write-Output "✅ Taskbar registry settings applied!"
+
+# -------------------------------
+# Pin Applications to Taskbar
+# -------------------------------
+$appsToPin = @(
+    "C:\Program Files\LibreOffice\program\scalc.exe",   # LibreOffice Calc
+    "C:\Program Files\Mozilla Firefox\firefox.exe",     # Firefox
+    "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", # Edge
+    "C:\Program Files\Notepad++\notepad++.exe",         # Notepad++
+    "C:\Program Files\GIMP 2\bin\gimp-2.10.exe",        # GIMP
+    "C:\Windows\System32\calc.exe"                      # Calculator
+)
+
+foreach ($app in $appsToPin) {
+    if (Test-Path $app) {
+        Start-Process -FilePath $app
+        Start-Sleep -Seconds 2
+        $Shell = New-Object -ComObject Shell.Application
+        $Folder = $Shell.Namespace((Get-Item $app).DirectoryName)
+        $Item = $Folder.ParseName((Get-Item $app).Name)
+        $Item.InvokeVerb("Pin to taskbar")
+        Write-Output "📌 Pinned $app to taskbar"
+    } else {
+        Write-Output "⚠️ File not found: $app"
+    }
+}
+
+# -------------------------------
+# Restart Windows Explorer
+# -------------------------------
+Stop-Process -Name explorer -Force
+Start-Process explorer.exe
+Write-Output "🔄 Explorer restarted. Taskbar settings applied!"
