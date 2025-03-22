@@ -3,33 +3,33 @@ on:
   pull_request:
     paths:
       - .github/**
-      - computer-use-agent-demo/**
+      - computer-use-demo/**
   push:
     branches:
       - main
     paths:
       - .github/**
-      - computer-use-agent-demo/**
+      - computer-use-demo/**
 jobs:
   ruff:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: computer-use-agent-demo
+        working-directory: computer-use-demo
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/ruff-action@v1
   pyright:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: computer-use-agent-demo
+        working-directory: computer-use-demo
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           cache: "pip"
-          python-version: "3.13.2"
+          python-version: "3.11.6"
       - run: |
           python -m venv .venv
           source .venv/bin/activate
@@ -37,16 +37,16 @@ jobs:
       - run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
       - uses: jakebailey/pyright-action@v1
   pytest:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: computer-use-agent-demo
+        working-directory: computer-use-demo
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           cache: "pip"
-          python-version: "3.13.2"
+          python-version: "3.11.6"
       - run: |
           python -m venv .venv
           source .venv/bin/activate
